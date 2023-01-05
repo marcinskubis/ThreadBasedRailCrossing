@@ -5,8 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projekt_SO1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1050">
     <Grid>
+        <Grid.Resources>
+            <PathGeometry x:Key="AnimationPath">
+                <PathGeometry.Figures>
+                    <PathFigure StartPoint="-520,-130" IsClosed="True">
+                        <LineSegment Point="110,-130"/>
+                        <LineSegment Point="112,-128"/>
+                        <LineSegment Point="130,-110"/>
+                        <LineSegment Point="90,110"/>
+                        <LineSegment Point="80,80"/>
+                    </PathFigure>
+                </PathGeometry.Figures>
+            </PathGeometry>
+        </Grid.Resources>
+        
+        <Canvas>
+            <Canvas.Background>
+                <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
+            </Canvas.Background>
+        </Canvas>
 
+        <Rectangle   
+      Width="30" Height="30" Fill="Blue">
+            <Rectangle.RenderTransform>
+                <TranslateTransform x:Name="AnimatedTranslateTransform"  />
+            </Rectangle.RenderTransform>
+
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="Path.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+
+                            <!-- Animates the rectangle horizotally along the path. -->
+                            <DoubleAnimationUsingPath
+                Storyboard.TargetName="AnimatedTranslateTransform"
+                Storyboard.TargetProperty="X"
+                PathGeometry="{StaticResource AnimationPath}"
+                Source="X" 
+                Duration="0:0:5"  />
+
+                            <!-- Animates the rectangle vertically along the path. -->
+                            <DoubleAnimationUsingPath
+                Storyboard.TargetName="AnimatedTranslateTransform"
+                Storyboard.TargetProperty="Y"
+                PathGeometry="{StaticResource AnimationPath}"
+                Source="Y" 
+                Duration="0:0:5"  />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Rectangle.Triggers>
+        </Rectangle>
     </Grid>
 </Window>
