@@ -20,9 +20,20 @@ namespace Projekt_SO1
     /// </summary>
     public partial class MainWindow : Window
     {
+        Image car = new Image();
+        BitmapImage btm= new BitmapImage();
         public MainWindow()
         {
             InitializeComponent();
+            btm.BeginInit();
+            btm.UriSource=new Uri("pack://application:,,,/resources/mapa.png");
+            btm.EndInit();
+            car.Source = btm;
+            car.Height = 440;
+            car.Width = 640;
+            Map.Children.Add(car);
+            Canvas.SetLeft(car, 500);
+            Canvas.SetTop(car, 460);
         }
     }
 }

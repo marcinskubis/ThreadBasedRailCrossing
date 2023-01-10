@@ -7,14 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1050">
     <Grid>
-        
-        
-        <Canvas>
+        <Canvas x:Name="Map">
             <Canvas.Background>
-                <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
+                <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="Resources/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
             </Canvas.Background>
         </Canvas>
-
-        
     </Grid>
 </Window>

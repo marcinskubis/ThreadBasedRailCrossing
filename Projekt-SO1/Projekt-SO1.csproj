@@ -10,26 +10,14 @@
 
   <ItemGroup>
     <None Remove="mapa.png" />
+    <None Remove="Resources\car.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="mapa.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resource1.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource1.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resource1.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <Resource Include="Resources\car.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\mapa.png" />
   </ItemGroup>
 
 </Project>
