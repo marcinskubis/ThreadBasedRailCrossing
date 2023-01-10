@@ -11,12 +11,14 @@
   <ItemGroup>
     <None Remove="mapa.png" />
     <None Remove="Resources\car.png" />
+    <None Remove="Resources\car1.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\car.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\car1.png" />
     <Resource Include="Resources\mapa.png" />
   </ItemGroup>
 

@@ -7,10 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1050">
     <Grid>
-        <Canvas x:Name="Map">
+        <Canvas x:Name="Map" Height="800" Width="1050">
             <Canvas.Background>
                 <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="Resources/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
+                
             </Canvas.Background>
+            <Image Source="Resources/car1.png" Width="80" Height="50" Canvas.Left="-50" Canvas.Top="240">
+            </Image>
         </Canvas>
     </Grid>
 </Window>

@@ -25,15 +25,16 @@ namespace Projekt_SO1
         public MainWindow()
         {
             InitializeComponent();
+
             btm.BeginInit();
-            btm.UriSource=new Uri("pack://application:,,,/resources/mapa.png");
+            btm.UriSource=new Uri("pack://application:,,,/resources/car1.png");
             btm.EndInit();
             car.Source = btm;
-            car.Height = 440;
-            car.Width = 640;
+            car.Height = 50;
+            car.Width = 80;
             Map.Children.Add(car);
-            Canvas.SetLeft(car, 500);
-            Canvas.SetTop(car, 460);
+            Canvas.SetLeft(car, 60);
+            Canvas.SetTop(car, 240);
         }
     }
 }
