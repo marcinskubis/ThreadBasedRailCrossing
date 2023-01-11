@@ -35,6 +35,7 @@ namespace Projekt_SO1
             Map.Children.Add(car);
             Canvas.SetLeft(car, 60);
             Canvas.SetTop(car, 240);
+            Canvas.SetBottom(car, 50);
         }
     }
 }
