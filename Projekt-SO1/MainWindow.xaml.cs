@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace Projekt_SO1
 {
@@ -36,6 +37,21 @@ namespace Projekt_SO1
             Canvas.SetLeft(car, 60);
             Canvas.SetTop(car, 240);
             Canvas.SetBottom(car, 50);
+            //Drive(car);
+            for (int i = 241; i < 560; i++)
+            {
+                Thread.Sleep(200);
+                Canvas.SetLeft(car, i);
+            }
+        }
+
+        public void Drive(Image car)
+        {
+            for(int i = 241; i < 560; i++)
+            {
+                Thread.Sleep(200);
+                Canvas.SetLeft(car, i);
+            }
         }
     }
 }
