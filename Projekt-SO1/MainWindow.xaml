@@ -7,59 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1050">
     <Grid>
-        <Grid.Resources>
-            <PathGeometry x:Key="AnimationPath" Figures="M16,260.04 C75.145503,274.06419 140.94649,250.44
-                          204.8,250.44 262.98007,250.44 322.52833,240.84 379.2,240.84 443.63626,240.84
-                          507.78817,226.7526 572.8,236.04 599.45175,239.84739 626.11799,241.82828 652.8,245.64
-                          684.46678,250.16383 705.39802,253.8694 732.8,272.84 786.22266,309.82492 828.02095,295.30072
-                          776,392.84 746.88801,447.42499 713.25281,437.64 640,437.64 532.75832,437.64 421.43116,431.24
-                          315.2,431.24 270.28098,431.24 206.53592,422.22738 166.4,445.64 108.32699,479.51592 110.4,481.89099
-                          110.4,570.44 110.4,602.65457 106.55247,609.89412 123.2,637.64 138.82879,663.68798 147.25404,660.78678
-                          184,666.44 242.8491,675.49371 293.40855,680.84 355.2,680.84 424.84297,680.84 486.87677,682.47803
-                          555.2,674.44 611.38073,667.8305 669.93548,670.29806 726.4,663.24 839.14703,649.14662 952.28303,684.04
-                          1065.6,684.04"/>
-        </Grid.Resources>
-        
-        <Canvas>
-            <Canvas.Background>
-                <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
-            </Canvas.Background>
+        <Canvas x:Name="Map" Height="800" Width="1050">
+                <Canvas.Background>
+                    <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="Resources/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
 
-            <Canvas.Resources>
-                <PathGeometry x:Key="AnimationPath" Figures="M16,260.04 C75.145503,274.06419 140.94649,250.44 204.8,250.44 262.98007,250.44 322.52833,240.84 379.2,240.84 443.63626,240.84 507.78817,226.7526 572.8,236.04 599.45175,239.84739 626.11799,241.82828 652.8,245.64 684.46678,250.16383 705.39802,253.8694 732.8,272.84 786.22266,309.82492 828.02095,295.30072 776,392.84 746.88801,447.42499 713.25281,437.64 640,437.64 532.75832,437.64 421.43116,431.24 315.2,431.24 270.28098,431.24 206.53592,422.22738 166.4,445.64 108.32699,479.51592 110.4,481.89099 110.4,570.44 110.4,602.65457 106.55247,609.89412 123.2,637.64 138.82879,663.68798 147.25404,660.78678 184,666.44 242.8491,675.49371 293.40855,680.84 355.2,680.84 424.84297,680.84 486.87677,682.47803 555.2,674.44 611.38073,667.8305 669.93548,670.29806 726.4,663.24 839.14703,649.14662 952.28303,684.04 1065.6,684.04"/>
-            </Canvas.Resources>
+                </Canvas.Background>
+                <Image Source="Resources/car1.png" Width="80" Height="50" Canvas.Left="-50" Canvas.Top="240">
+                </Image>
         </Canvas>
-
-        <Rectangle   
-                Width="30" Height="30" Fill="Blue">
-            <Rectangle.RenderTransform>
-                <TranslateTransform x:Name="AnimatedTranslateTransform"  />
-            </Rectangle.RenderTransform>
-
-            <Rectangle.Triggers>
-                <EventTrigger RoutedEvent="Path.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard RepeatBehavior="Forever">
-
-                            <!-- Animates the rectangle horizotally along the path. -->
-                            <DoubleAnimationUsingPath
-                Storyboard.TargetName="AnimatedTranslateTransform"
-                Storyboard.TargetProperty="X"
-                PathGeometry="{StaticResource AnimationPath}"
-                Source="X" 
-                Duration="0:0:5"  />
-
-                            <!-- Animates the rectangle vertically along the path. -->
-                            <DoubleAnimationUsingPath
-                Storyboard.TargetName="AnimatedTranslateTransform"
-                Storyboard.TargetProperty="Y"
-                PathGeometry="{StaticResource AnimationPath}"
-                Source="Y" 
-                Duration="0:0:5"  />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Rectangle.Triggers>
-        </Rectangle>
     </Grid>
+
 </Window>
