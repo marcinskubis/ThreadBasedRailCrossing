@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Projekt_SO1
 {
@@ -21,27 +22,40 @@ namespace Projekt_SO1
     /// </summary>
     public partial class MainWindow : Window
     {
-        Image car = new Image();
-        BitmapImage btm= new BitmapImage();
+        Image [] car = new Image[24];
+        BitmapImage btm = new BitmapImage();
         public MainWindow()
         {
             InitializeComponent();
             btm.BeginInit();
             btm.UriSource=new Uri("pack://application:,,,/resources/car1.png");
             btm.EndInit();
-            car.Source = btm;
-            car.Height = 50;
-            car.Width = 80;
-            Map.Children.Add(car);
-            Canvas.SetLeft(car, -20);
-            Canvas.SetTop(car, 240);
-            Canvas.SetBottom(car, 50);
-            int velocity = 3; //(3;10)
-            DriveDown(car, velocity);
-            
+            for(int i = 0; i < 24; i++)
+            {
+                car[i] = new Image();
+                car[i].Source = btm;
+                car[i].Height = 50;
+                car[i].Width = 80;
+                Canvas.SetLeft(car[i], -80);
+                Canvas.SetTop(car[i], 240);
+                Canvas.SetBottom(car[i], 50);
+                Map.Children.Add(car[i]);
+            }
+            Random rnd = new Random();
+            Stopwatch stopwatch = new Stopwatch();
+            //DriveDown(car,rnd.Next(3,10));
+            stopwatch.Start();
+            new Thread(() =>
+            {
+                for(int i = 0; i < 24; i++)
+                {
+                    Thread.Sleep(2000);
+                    DriveDown(car[i], rnd.Next(3, 10));
+                }
+            }).Start();
         }
 
-        public void DriveDown(Image car,int velocity)
+        private void DriveDown(Image car,int velocity)
         {
             new Thread(() =>
             {
@@ -51,7 +65,6 @@ namespace Projekt_SO1
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => { Canvas.SetLeft(car, i); ; }));
                 }
-                int pozycja = 0;
                 //zakręt
                 /*while (pozycja<436)
                 {
@@ -71,7 +84,7 @@ namespace Projekt_SO1
                         ; }));
                 }*/
                 int r = 650;
-                while (r > 649 && r < 900)
+                /*while (r > 649 && r < 900)
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
@@ -79,7 +92,7 @@ namespace Projekt_SO1
                         Canvas.SetLeft(car, Math.Sqrt(6000 - Math.Pow((double)r - 745, 2)) + 650); ;
                     }));
                     r++;
-                }
+                }*/
             }).Start();
 
         }
