@@ -47,10 +47,10 @@ namespace Projekt_SO1
             stopwatch.Start();
             new Thread(() =>
             {
-                for(int i = 0; i < 1; i++)
+                for(int i = 0; i < 24; i++)
                 {
-                    //Thread.Sleep(rnd.Next(3000,20000));
-                    DriveDown(car[i], 4);
+                    Thread.Sleep(rnd.Next(1000,5000));
+                    DriveDown(car[i], rnd.Next(3,7));
                 }
             }).Start();
         }
@@ -71,7 +71,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        t = new RotateTransform((r - 657) * 180 / 100, car.Width / 2, car.Height / 2);
+                        t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
                         car.RenderTransform = t;
                         Canvas.SetTop(car, r - 409);
                         Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660); ;
@@ -82,9 +82,36 @@ namespace Projekt_SO1
                 for (int j=660; j > 200; j--)
                 {
                     Thread.Sleep(velocity);
-                    Dispatcher.Invoke(new Action(() => { Canvas.SetLeft(car, j); ; }));
+                    Dispatcher.Invoke(new Action(() => {
+                        t = new RotateTransform(180, car.Width / 2, car.Height / 2);
+                        car.RenderTransform = t;
+                        Canvas.SetLeft(car, j);
+                        Canvas.SetTop(car,405); 
+                    }));
                 };
-                
+                r = 814;
+                while(r>813 && r < 1075) //977
+                {
+                    Thread.Sleep(velocity);
+                    Dispatcher.Invoke(new Action(() => {
+                        t = new RotateTransform((1075-r) * 180 / 290, car.Width / 2, car.Height / 2);
+                        car.RenderTransform = t;
+                        Canvas.SetTop(car, r - 409);
+                        Canvas.SetLeft(car, (-1)*Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205); ;
+                    }));
+                    r++;
+                }
+
+                //ostatnia prosta
+                for(int k=200; k < 1200; k++)
+                {
+                    Thread.Sleep(velocity);
+                    Dispatcher.Invoke(new Action(() => {
+                        Canvas.SetLeft(car, k);
+                        Canvas.SetTop(car, 670);
+                    }));
+                }
+
             }).Start();
 
         }
