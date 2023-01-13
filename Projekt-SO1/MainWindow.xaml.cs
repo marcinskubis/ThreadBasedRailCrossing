@@ -24,12 +24,15 @@ namespace Projekt_SO1
     {
         Image [] car = new Image[24];
         BitmapImage btm = new BitmapImage();
+        RotateTransform t = new RotateTransform();
         public MainWindow()
         {
             InitializeComponent();
             btm.BeginInit();
             btm.UriSource=new Uri("pack://application:,,,/resources/car1.png");
             btm.EndInit();
+            Random rnd = new Random();
+            Stopwatch stopwatch = new Stopwatch();
             for(int i = 0; i < 24; i++)
             {
                 car[i] = new Image();
@@ -41,16 +44,13 @@ namespace Projekt_SO1
                 Canvas.SetBottom(car[i], 50);
                 Map.Children.Add(car[i]);
             }
-            Random rnd = new Random();
-            Stopwatch stopwatch = new Stopwatch();
-            //DriveDown(car,rnd.Next(3,10));
             stopwatch.Start();
             new Thread(() =>
             {
-                for(int i = 0; i < 24; i++)
+                for(int i = 0; i < 1; i++)
                 {
-                    Thread.Sleep(2000);
-                    DriveDown(car[i], rnd.Next(3, 10));
+                    //Thread.Sleep(rnd.Next(3000,20000));
+                    DriveDown(car[i], 4);
                 }
             }).Start();
         }
@@ -60,39 +60,31 @@ namespace Projekt_SO1
             new Thread(() =>
             {
                 //prosta
-                for (int i = -19; i < 650; i++)
+                for (int i = -19; i < 660; i++)
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => { Canvas.SetLeft(car, i); ; }));
                 }
                 //zakręt
-                /*while (pozycja<436)
+                int r = 659;
+                while (r > 658 && r < 822)
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        Canvas.SetTop(car, (double)car.GetValue(Canvas.TopProperty)+1);
-                        if ((double)car.GetValue(Canvas.LeftProperty) < 800)
-                        {
-                            Canvas.SetLeft(car, (double)car.GetValue(Canvas.LeftProperty) + 1);
-                        }
-                        else
-                        {
-                            Canvas.SetLeft(car, (double)car.GetValue(Canvas.LeftProperty) - 1);
-                        }
-                        pozycja = Convert.ToInt32(car.GetValue(Canvas.TopProperty));
-                        ;
-                        ; }));
-                }*/
-                int r = 650;
-                /*while (r > 649 && r < 900)
-                {
-                    Thread.Sleep(velocity);
-                    Dispatcher.Invoke(new Action(() => {
-                        Canvas.SetTop(car, r - 350);
-                        Canvas.SetLeft(car, Math.Sqrt(6000 - Math.Pow((double)r - 745, 2)) + 650); ;
+                        t = new RotateTransform((r - 657) * 180 / 100, car.Width / 2, car.Height / 2);
+                        car.RenderTransform = t;
+                        Canvas.SetTop(car, r - 409);
+                        Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660); ;
                     }));
                     r++;
-                }*/
+                }
+
+                for (int j=660; j > 200; j--)
+                {
+                    Thread.Sleep(velocity);
+                    Dispatcher.Invoke(new Action(() => { Canvas.SetLeft(car, j); ; }));
+                };
+                
             }).Start();
 
         }

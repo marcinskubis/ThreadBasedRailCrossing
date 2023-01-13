@@ -12,7 +12,7 @@
                     <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="Resources/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
 
                 </Canvas.Background>
-                <Image Source="Resources/car1.png" Width="80" Height="50" Canvas.Left="650" Canvas.Top="240">
+                <Image Source="Resources/car1.png" Width="80" Height="50" Canvas.Left="200" Canvas.Top="240">
                 </Image>
         </Canvas>
     </Grid>
