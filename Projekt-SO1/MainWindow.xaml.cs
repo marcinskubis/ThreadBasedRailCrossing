@@ -23,17 +23,46 @@ namespace Projekt_SO1
     public partial class MainWindow : Window
     {
         Image [] car = new Image[24];
+        Image [] train = new Image[10];
         BitmapImage btm = new BitmapImage();
+        BitmapImage btm2 = new BitmapImage();
         RotateTransform t = new RotateTransform();
+        bool TrainIsComing = false;
         public MainWindow()
         {
             InitializeComponent();
             btm.BeginInit();
             btm.UriSource=new Uri("pack://application:,,,/resources/car1.png");
             btm.EndInit();
+            btm2.BeginInit();
+            btm2.UriSource = new Uri("pack://application:,,,/resources/train.png");
+            btm2.EndInit();
             Random rnd = new Random();
             Stopwatch stopwatch = new Stopwatch();
-            for(int i = 0; i < 24; i++)
+
+            
+
+            for(int i=0; i < 10; i++)
+            {
+                train[i] = new Image();
+                train[i].Source = btm2;
+                train[i].Height = 200;
+                train[i].Width = 400;
+                Canvas.SetLeft(train[i], 1100);
+                Canvas.SetTop(train[i], 490);
+                Map.Children.Add(train[i]);
+            }
+
+            new Thread(() =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Thread.Sleep(rnd.Next(10000, 30000));
+                    Train(train[i]);
+                }
+            }).Start();
+
+            for (int i = 0; i < 24; i++)
             {
                 car[i] = new Image();
                 car[i].Source = btm;
@@ -44,7 +73,7 @@ namespace Projekt_SO1
                 Canvas.SetBottom(car[i], 50);
                 Map.Children.Add(car[i]);
             }
-            stopwatch.Start();
+
             new Thread(() =>
             {
                 for(int i = 0; i < 24; i++)
@@ -92,14 +121,23 @@ namespace Projekt_SO1
                 r = 814;
                 while(r>813 && r < 1075) //977
                 {
+                    
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        t = new RotateTransform((1075-r) * 180 / 290, car.Width / 2, car.Height / 2);
+                        t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
                         car.RenderTransform = t;
                         Canvas.SetTop(car, r - 409);
-                        Canvas.SetLeft(car, (-1)*Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205); ;
+                        Canvas.SetLeft(car, (-1) * Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205); ;
                     }));
                     r++;
+                    
+                    if (TrainIsComing && r==929)
+                    {
+                        do
+                        {
+                            Thread.Sleep(1);
+                        } while (TrainIsComing);
+                    }
                 }
 
                 //ostatnia prosta
@@ -114,6 +152,22 @@ namespace Projekt_SO1
 
             }).Start();
 
+        }
+
+        public void Train(Image train)
+        {
+            new Thread(() =>
+            {
+                TrainIsComing = true;
+                for (int i = 1100; i > -450; i--)
+                {
+                    Thread.Sleep(4);
+                    Dispatcher.Invoke(new Action(() => {
+                        Canvas.SetLeft(train, i);
+                    }));
+                }
+                TrainIsComing = false;
+            }).Start();
         }
     }
 }
