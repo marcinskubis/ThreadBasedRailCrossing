@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace Projekt_SO1
 {
@@ -30,6 +31,7 @@ namespace Projekt_SO1
         bool TrainIsComing = false;
         double x = 0;
         double y = 0;
+        int beforeTurnVelocity=0;
         public MainWindow()
         {
             InitializeComponent();
@@ -81,7 +83,7 @@ namespace Projekt_SO1
             {
                 for(int i = 0; i < 100; i++)
                 {
-                    Thread.Sleep(rnd.Next(2000,5000));
+                    Thread.Sleep(rnd.Next(1500,5000));
                     Dispatcher.Invoke(new Action(() => {
                         DriveDown(car[i], Convert.ToInt32(car[i].Tag)); ;
                     }));
@@ -189,12 +191,18 @@ namespace Projekt_SO1
                         } while (TrainIsComing);
                     }
                 };
+                if (x != 0 && y != 0)
+                {
+                    velocity = beforeTurnVelocity;
+                }
+                x = 0;
+                y = 0;
                 r = 814;
                 while(r>813 && r < 1075) //977
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string w = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r+50) - 944, 2)) + 205, (r + 50) - 409);
+                        string w = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r+85) - 944, 2)) + 205, (r + 85) - 409);
                         if (w == "false")
                         {
                             t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
@@ -213,7 +221,6 @@ namespace Projekt_SO1
                         
 
                     }));
-                    r++;
                     
                     if (TrainIsComing && r==915)
                     {
@@ -224,13 +231,14 @@ namespace Projekt_SO1
                     }
                     bool stop = false;
                     Dispatcher.Invoke(new Action(() => {
-                        string p = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 70) - 944, 2)) + 205, (r + 70) - 409);
+                        string p = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 85) - 944, 2)) + 205, (r + 85) - 409);
                         if (TrainIsComing && p != "false")
                         {
                             velocity = Convert.ToInt32(p);
                             stop = true;
                             x = Canvas.GetLeft(car);
                             y = Canvas.GetTop(car);
+                            beforeTurnVelocity = Convert.ToInt32(car.Tag);
                         }
                     }));
 
@@ -241,7 +249,7 @@ namespace Projekt_SO1
                             Thread.Sleep(1);
                         } while (TrainIsComing);
                     }
-                    
+                    r++;
                 }
 
                 //ostatnia prosta
