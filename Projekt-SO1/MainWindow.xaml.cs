@@ -28,6 +28,8 @@ namespace Projekt_SO1
         BitmapImage btm2 = new BitmapImage();
         RotateTransform t = new RotateTransform();
         bool TrainIsComing = false;
+        double x = 0;
+        double y = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -68,6 +70,7 @@ namespace Projekt_SO1
                 car[i].Source = btm;
                 car[i].Height = 50;
                 car[i].Width = 80;
+                car[i].Tag = $"{rnd.Next(3,5)}";
                 Canvas.SetLeft(car[i], -80);
                 Canvas.SetTop(car[i], 240);
                 Canvas.SetBottom(car[i], 50);
@@ -78,8 +81,10 @@ namespace Projekt_SO1
             {
                 for(int i = 0; i < 24; i++)
                 {
-                    Thread.Sleep(rnd.Next(1000,5000));
-                    DriveDown(car[i], rnd.Next(3,7));
+                    Thread.Sleep(rnd.Next(500,2000));
+                    Dispatcher.Invoke(new Action(() => {
+                        DriveDown(car[i], Convert.ToInt32(car[i].Tag)); ;
+                    }));
                 }
             }).Start();
         }
@@ -92,7 +97,19 @@ namespace Projekt_SO1
                 for (int i = -19; i < 660; i++)
                 {
                     Thread.Sleep(velocity);
-                    Dispatcher.Invoke(new Action(() => { Canvas.SetLeft(car, i); ; }));
+                    Dispatcher.Invoke(new Action(() => {
+                        string w = CheckImage(Map, i + 85, 240);
+                        if (w=="false")
+                        { 
+                            Canvas.SetLeft(car, i); ;
+                        }
+                        else
+                        {
+                            velocity=Convert.ToInt32(w);
+                            Canvas.SetLeft(car, i);
+                        }
+                        ;
+                        ; }));
                 }
                 //zakręt
                 int r = 659;
@@ -100,10 +117,23 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
-                        car.RenderTransform = t;
-                        Canvas.SetTop(car, r - 409);
-                        Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660); ;
+                        string w = CheckImage(Map, Math.Sqrt(7550 - Math.Pow((double)(r+10) - 735, 2)) + 660, (r + 10) - 409);
+                        if (w == "false")
+                        {
+                            t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetTop(car, r - 409);
+                            Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660);
+                        }
+                        else
+                        {
+                            velocity = Convert.ToInt32(w);
+                            t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetTop(car, r - 409);
+                            Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660);
+                        }
+                        
                     }));
                     r++;
                 }
@@ -112,32 +142,101 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        t = new RotateTransform(180, car.Width / 2, car.Height / 2);
-                        car.RenderTransform = t;
-                        Canvas.SetLeft(car, j);
-                        Canvas.SetTop(car,405); 
+                        string w = CheckImage(Map, j-85, 405);
+                        if (w == "false")
+                        { 
+                            t = new RotateTransform(180, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetLeft(car, j);
+                            Canvas.SetTop(car, 405);
+                        }
+                        else
+                        {
+                            velocity = Convert.ToInt32(w);
+                            t = new RotateTransform(180, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetLeft(car, j);
+                            Canvas.SetTop(car, 405);
+                        }
+
                     }));
-                };
-                r = 814;
-                while(r>813 && r < 1075) //977
-                {
-                    
-                    Thread.Sleep(velocity);
+
+                    bool stop = false;
                     Dispatcher.Invoke(new Action(() => {
-                        t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
-                        car.RenderTransform = t;
-                        Canvas.SetTop(car, r - 409);
-                        Canvas.SetLeft(car, (-1) * Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205); ;
+                        if(x!=0 && y != 0)
+                        {
+                            if(TrainIsComing && CheckImage(Map, x, y) != "false" && CheckImage(Map, j-85, 405) == "false" && j==220)
+                            {
+                                stop = true;
+                                
+                            }
+
+                            else if(TrainIsComing && CheckImage(Map, j - 85, 405) != "false" && CheckImage(Map, x, y) != "false")
+                            {
+                                stop = true;
+                            }
+                        }
                     }));
-                    r++;
-                    
-                    if (TrainIsComing && r==929)
+
+                    if (stop)
                     {
                         do
                         {
                             Thread.Sleep(1);
                         } while (TrainIsComing);
                     }
+                };
+                r = 814;
+                while(r>813 && r < 1075) //977
+                {
+                    Thread.Sleep(velocity);
+                    Dispatcher.Invoke(new Action(() => {
+                        string w = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 70) - 944, 2)) + 205, (r + 70) - 409);
+                        if (w == "false")
+                        {
+                            t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetTop(car, r - 409);
+                            Canvas.SetLeft(car, (-1) * Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205);
+                        }
+                        else
+                        {
+                            velocity = Convert.ToInt32(w);
+                            t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetTop(car, r - 409);
+                            Canvas.SetLeft(car, (-1) * Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205);
+                        }
+                        
+
+                    }));
+                    r++;
+                    
+                    if (TrainIsComing && r==915)
+                    {
+                        do
+                        {
+                            Thread.Sleep(1);
+                        } while (TrainIsComing);
+                    }
+                    bool stop = false;
+                    Dispatcher.Invoke(new Action(() => {
+                        if (TrainIsComing && CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 70) - 944, 2)) + 205, (r + 70) - 409) != "false")
+                        {
+                            stop = true;
+                            x = Canvas.GetLeft(car);
+                            y = Canvas.GetTop(car);
+                        }
+                    }));
+
+                    if (stop)
+                    {
+                        do
+                        {
+                            Thread.Sleep(1);
+                        } while (TrainIsComing);
+                    }
+                    
                 }
 
                 //ostatnia prosta
@@ -145,11 +244,22 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        Canvas.SetLeft(car, k);
-                        Canvas.SetTop(car, 670);
+                        string w = CheckImage(Map, k + 85, 240);
+                        if (w == "false")
+                        {
+                            Canvas.SetLeft(car, k);
+                            Canvas.SetTop(car, 670); ;
+                        }
+                        else
+                        {
+                            velocity = Convert.ToInt32(w);
+                            Canvas.SetLeft(car, k);
+                            Canvas.SetTop(car, 670);
+                        }
+                        ;
+                        ;
                     }));
                 }
-
             }).Start();
 
         }
@@ -168,6 +278,29 @@ namespace Projekt_SO1
                 }
                 TrainIsComing = false;
             }).Start();
+        }
+
+        string CheckImage(Canvas canvas, double x, double y)
+        {
+            bool imageExists = false;
+            foreach (UIElement element in canvas.Children)
+            {
+                if (element is Image)
+                {
+                    Image image = (Image)element;
+                    if (Canvas.GetLeft(image) == x && Canvas.GetTop(image) == y)
+                    {
+                        imageExists = true;
+                        if (imageExists)
+                        {
+                            return $"{Convert.ToInt32(image.Tag)}";
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            return "false";
         }
     }
 }
