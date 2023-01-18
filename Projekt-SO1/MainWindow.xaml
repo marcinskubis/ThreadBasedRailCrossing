@@ -12,7 +12,7 @@
                 <ImageBrush AlignmentX="Right" AlignmentY="Bottom" Stretch="Fill" ImageSource="Resources/mapa.png" ViewboxUnits="RelativeToBoundingBox" TileMode="None" />
             </Canvas.Background>
             <!--<Image Source="Resources/train.png" Width="400" Height="200" Canvas.Left="0" Canvas.Top="240"></Image>-->
-            <Image Source="Resources/car1.png" Width="80" Height="50" Canvas.Top="454" Canvas.Left="660" RenderTransformOrigin="0.5,0.5" >
+            <!--<Image Source="Resources/car1.png" Width="80" Height="50" Canvas.Top="454" Canvas.Left="660" RenderTransformOrigin="0.5,0.5" >
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -22,7 +22,7 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Image.RenderTransform>
-            </Image>
+            </Image>-->
         </Canvas>
     </Grid>
 
