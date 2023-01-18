@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Windows.Media.Animation;
 
 namespace Projekt_SO1
 {
@@ -136,7 +137,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string w = CheckImage(Map, Math.Sqrt(7550 - Math.Pow((double)(r+10) - 735, 2)) + 660, (r + 10) - 409);
+                        string w = CheckImage(Map, Math.Sqrt(7550 - Math.Pow((double)(r+85) - 735, 2)) + 660, (r + 85) - 409);
                         if (w == "false")
                         {
                             t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
@@ -365,30 +366,99 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        t = new RotateTransform((655 - r) * 180 / 175, car.Width / 2, car.Height / 2);
-                        car.RenderTransform = t;
-                        Canvas.SetTop(car, r - 201);
-                        Canvas.SetLeft(car, (-1)*Math.Sqrt(7600 - Math.Pow((double)r - 740, 2)) + 225);
-                        //string w = CheckImage(Map, Math.Sqrt(7550 - Math.Pow((double)(r + 10) - 735, 2)) + 660, (r + 10) - 409);
-                        /*if (w == "false")
+                        
+                        string w = CheckImage(Map, (-1) * Math.Sqrt(7600 - Math.Pow((double)(r+85) - 740, 2)) + 225, (r + 85) - 201);
+                        if (w == "false")
                         {
-                            t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
+                            t = new RotateTransform((655 - r) * 180 / 175, car.Width / 2, car.Height / 2);
                             car.RenderTransform = t;
-                            Canvas.SetTop(car, r - 409);
-                            Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660);
+                            Canvas.SetTop(car, r - 201);
+                            Canvas.SetLeft(car, (-1) * Math.Sqrt(7600 - Math.Pow((double)r - 740, 2)) + 225);
                         }
                         else
                         {
                             velocity = Convert.ToInt32(w);
-                            t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
+                            t = new RotateTransform((655 - r) * 180 / 175, car.Width / 2, car.Height / 2);
                             car.RenderTransform = t;
-                            Canvas.SetTop(car, r - 409);
-                            Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660);
-                        }*/
+                            Canvas.SetTop(car, r - 201);
+                            Canvas.SetLeft(car, (-1) * Math.Sqrt(7600 - Math.Pow((double)r - 740, 2)) + 225);
+                        }
 
                     }));
                     r--;
                 }
+
+                //druga prosta
+
+                for(int j=230; j<660; j++)
+                {
+                    Thread.Sleep(velocity);
+                    Dispatcher.Invoke(new Action(() => {
+                        string k = CheckImage(Map, j + 85, 454);
+                        if (k == "false")
+                        {
+                            Canvas.SetTop(car, 454);
+                            Canvas.SetLeft(car, j);
+                        }
+                        else
+                        {
+                            velocity = Convert.ToInt32(k);
+                            Canvas.SetTop(car, 454);
+                            Canvas.SetLeft(car, j);
+                        }
+                    }));
+                }
+
+                //zakręt
+                r = 1075;
+                while (r > 813 && r < 1076) //977
+                {
+                    Thread.Sleep(velocity);
+                    Dispatcher.Invoke(new Action(() => {
+                        Canvas.SetTop(car, r - 621);
+                        Canvas.SetLeft(car, Math.Sqrt(17200 - Math.Pow((double)r -900, 2)) + 670);
+                        /*string w = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 85) - 944, 2)) + 205, (r + 85) - 409);
+                        if (w == "false")
+                        {
+                            t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetTop(car, r - 409);
+                            Canvas.SetLeft(car, (-1) * Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205);
+                        }
+                        else
+                        {
+                            velocity = Convert.ToInt32(w);
+                            t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
+                            car.RenderTransform = t;
+                            Canvas.SetTop(car, r - 409);
+                            Canvas.SetLeft(car, (-1) * Math.Sqrt(17200 - Math.Pow((double)r - 944, 2)) + 205);
+                        }*/
+
+
+                    }));
+
+                    if (TrainIsComing && r == 915)
+                    {
+                        do
+                        {
+                            Thread.Sleep(1);
+                        } while (TrainIsComing);
+                    }
+                    bool stop = false;
+                    Dispatcher.Invoke(new Action(() => {
+                        string p = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 85) - 944, 2)) + 205, (r + 85) - 409);
+                        if (TrainIsComing && p != "false")
+                        {
+                            velocity = Convert.ToInt32(p);
+                            stop = true;
+                            x = Canvas.GetLeft(car);
+                            y = Canvas.GetTop(car);
+                            beforeTurnVelocity = Convert.ToInt32(car.Tag);
+                        }
+                    }));
+                    r--;
+                }
+
             }).Start();
         }
 
@@ -430,5 +500,6 @@ namespace Projekt_SO1
             
             return "false";
         }
+
     }
 }
