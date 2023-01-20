@@ -25,7 +25,7 @@ namespace Projekt_SO1
     public partial class MainWindow : Window
     {
         Image [] cars = new Image[100];
-        Image [] cars1 = new Image[100];
+        int [] velocities = new int[100];
         Image [] train = new Image[10];
         BitmapImage btm = new BitmapImage();
         BitmapImage btm2 = new BitmapImage();
@@ -77,6 +77,7 @@ namespace Projekt_SO1
                 cars[i].Height = 50;
                 cars[i].Width = 80;
                 cars[i].Tag = $"{rnd.Next(3,6)}";
+                velocities[i] = Convert.ToInt32(cars[i].Tag);
                 Canvas.SetLeft(cars[i], -80);
                 Canvas.SetTop(cars[i], 240);
                 //Canvas.SetBottom(car[i], 50);
@@ -86,14 +87,14 @@ namespace Projekt_SO1
             {
                 for(int i = 0; i < 100; i++)
                 {
-                    Thread.Sleep(rnd.Next(750,3000));
+                    Thread.Sleep(rnd.Next(1250,3000));
                     int upOrDown = rnd.Next(0, 2);
                     switch (upOrDown)
                     {
                         case 0:
                             Dispatcher.Invoke(new Action(() => {
                                 Map.Children.Add(cars[i]);
-                                DriveDown(cars[i], Convert.ToInt32(cars[i].Tag)); ;
+                                DriveDown(cars[i], Convert.ToInt32(cars[i].Tag),i); ;
                             }));
                             break;
                         case 1:
@@ -107,7 +108,7 @@ namespace Projekt_SO1
             }).Start();
         }
 
-        private void DriveDown(Image car,int velocity)
+        private void DriveDown(Image car,int velocity,int vv)
         {
             new Thread(() =>
             {
@@ -196,6 +197,7 @@ namespace Projekt_SO1
                             else if(TrainIsComing && k1 != "false" && k != "false")
                             {
                                 velocity = Convert.ToInt32(k1);
+                                velocities[vv]=Convert.ToInt32(k1);
                                 stop = true;
                             }
                         }
@@ -211,7 +213,7 @@ namespace Projekt_SO1
                 };
                 if (x != 0 && y != 0)
                 {
-                    velocity = beforeTurnVelocity;
+                    velocity = velocities[vv];
                 }
                 x = 0;
                 y = 0;
@@ -302,9 +304,10 @@ namespace Projekt_SO1
                 //pierwsza prosta
                 for (int i=1100; i > 229; i--)
                 {
+                    string q="";
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string q = CheckImage(Map, i - 77, 620);
+                         q = CheckImage(Map, i - 77, 620);
                         
                         if (q == "false")
                         {
@@ -325,32 +328,20 @@ namespace Projekt_SO1
                         }
                     }));
                     bool stop = false;
-                    //zatrzymanie autek przed torami
-                    Dispatcher.Invoke(new Action(() => {
-                        string p = CheckImage(Map, 230, 620);
-                        string p1 = CheckImage(Map, i - 77, 620);
-                        if (TrainIsComing && p != "false" && p1=="false" && i==230)
-                        {
-                            velocity = Convert.ToInt32(p);
-                            stop = true;
-                        }
-                        else if(TrainIsComing && p1 != "false" && p != "false")
-                        {
-                            velocity = Convert.ToInt32(p);
-                            stop = true;
-                        }
-
-                    }));
-
-                    if (stop)
+                    if (q != "false" && TrainIsComing)
                     {
                         do
                         {
                             Thread.Sleep(1);
                         } while (TrainIsComing);
-                        stop = false;
                     }
-
+                    if(TrainIsComing && i == 230)
+                    {
+                        do
+                        {
+                            Thread.Sleep(1);
+                        } while (TrainIsComing);
+                    }
                 }
                 if (beforeUpFirstTurn)
                 {
