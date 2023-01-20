@@ -116,7 +116,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string q = CheckImage(Map, i + 85, 240);
+                        string q = CheckImage(Map, i + 77, 240);
                         if (q=="false")
                         { 
                             Canvas.SetLeft(car, i); ;
@@ -137,7 +137,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string w = CheckImage(Map, Math.Sqrt(7550 - Math.Pow((double)(r+85) - 735, 2)) + 660, (r + 85) - 409);
+                        string w = CheckImage(Map, Math.Sqrt(7550 - Math.Pow((double)(r+77) - 735, 2)) + 660, (r + 77) - 409);
                         if (w == "false")
                         {
                             t = new RotateTransform((r - 657) * 180 / 162, car.Width / 2, car.Height / 2);
@@ -162,7 +162,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string w = CheckImage(Map, j-85, 405);
+                        string w = CheckImage(Map, j-77, 405);
                         if (w == "false")
                         { 
                             t = new RotateTransform(180, car.Width / 2, car.Height / 2);
@@ -186,7 +186,7 @@ namespace Projekt_SO1
                         if(x!=0 && y != 0)
                         {
                             string k = CheckImage(Map, x, y);
-                            string k1 = CheckImage(Map, j - 85, 405);
+                            string k1 = CheckImage(Map, j - 77, 405);
                             if (TrainIsComing && k != "false" && k1 == "false" && j==220)
                             {
                                 velocity = Convert.ToInt32(k);
@@ -220,7 +220,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string w = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r+85) - 944, 2)) + 205, (r + 85) - 409);
+                        string w = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r+77) - 944, 2)) + 205, (r + 77) - 409);
                         if (w == "false")
                         {
                             t = new RotateTransform((1075 - r) * 180 / 290, car.Width / 2, car.Height / 2);
@@ -249,7 +249,7 @@ namespace Projekt_SO1
                     }
                     bool stop = false;
                     Dispatcher.Invoke(new Action(() => {
-                        string p = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 85) - 944, 2)) + 205, (r + 85) - 409);
+                        string p = CheckImage(Map, (-1) * Math.Sqrt(17200 - Math.Pow((double)(r + 77) - 944, 2)) + 205, (r + 77) - 409);
                         if (TrainIsComing && p != "false")
                         {
                             velocity = Convert.ToInt32(p);
@@ -275,7 +275,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string w = CheckImage(Map, k + 85, 670);
+                        string w = CheckImage(Map, k + 77, 670);
                         if (w == "false")
                         {
                             Canvas.SetLeft(car, k);
@@ -304,7 +304,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string q = CheckImage(Map, i - 85, 620);
+                        string q = CheckImage(Map, i - 77, 620);
                         
                         if (q == "false")
                         {
@@ -328,7 +328,7 @@ namespace Projekt_SO1
                     //zatrzymanie autek przed torami
                     Dispatcher.Invoke(new Action(() => {
                         string p = CheckImage(Map, 230, 620);
-                        string p1 = CheckImage(Map, i - 85, 620);
+                        string p1 = CheckImage(Map, i - 77, 620);
                         if (TrainIsComing && p != "false" && p1=="false" && i==230)
                         {
                             velocity = Convert.ToInt32(p);
@@ -366,7 +366,7 @@ namespace Projekt_SO1
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
                         
-                        string w = CheckImage(Map, (-1) * Math.Sqrt(7600 - Math.Pow((double)(r+85) - 740, 2)) + 225, (r + 85) - 201);
+                        string w = CheckImage(Map, (-1) * Math.Sqrt(7600 - Math.Pow((double)(r+77) - 740, 2)) + 225, (r + 77) - 201);
                         if (w == "false")
                         {
                             t = new RotateTransform((655 - r) * 180 / 175, car.Width / 2, car.Height / 2);
@@ -392,7 +392,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string k = CheckImage(Map, j + 85, 454);
+                        string k = CheckImage(Map, j + 77, 454);
                         if (k == "false")
                         {
                             Canvas.SetTop(car, 454);
@@ -414,7 +414,7 @@ namespace Projekt_SO1
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
                         
-                        string w = CheckImage(Map, Math.Sqrt(17200 - Math.Pow((r+85) - 944, 2)) + 675, (r + 85) - 409);
+                        string w = CheckImage(Map, Math.Sqrt(17200 - Math.Pow((r+77) - 944, 2)) + 675, (r + 77) - 409);
                         if (w == "false")
                         {
                             t = new RotateTransform((r - 1075) * 180 / 260, car.Width / 2, car.Height / 2);
@@ -440,7 +440,7 @@ namespace Projekt_SO1
                 {
                     Thread.Sleep(velocity);
                     Dispatcher.Invoke(new Action(() => {
-                        string q = CheckImage(Map, p - 85, 193);
+                        string q = CheckImage(Map, p - 77, 193);
                         if (q == "false")
                         {
                             Canvas.SetTop(car, 193);
