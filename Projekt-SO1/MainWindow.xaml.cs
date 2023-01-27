@@ -154,11 +154,26 @@ namespace Projekt_SO1
                             Canvas.SetTop(car, r - 409);
                             Canvas.SetLeft(car, Math.Sqrt(7550 - Math.Pow((double)r - 735, 2)) + 660);
                         }
-                        
+                        if (r == 800)
+                        {
+                            string q = "false";
+                            for (int j = 660; j > 200; j--)
+                            {
+                                q = CheckImage(Map, j, 405);
+                                if (q != "false")
+                                {
+                                    break;
+                                }
+                            }
+                            if (q != "false")
+                            {
+                                velocities[vv] = Convert.ToInt32(q);
+                            }
+                        }
                     }));
                     r++;
                 }
-
+                velocity = velocities[vv];
                 for (int j=660; j > 200; j--)
                 {
                     Thread.Sleep(velocity);
