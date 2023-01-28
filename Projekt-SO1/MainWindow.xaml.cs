@@ -194,7 +194,6 @@ namespace Projekt_SO1
                             Canvas.SetLeft(car, j);
                             Canvas.SetTop(car, 405);
                         }
-
                     }));
 
                     bool stop = false;
@@ -256,7 +255,6 @@ namespace Projekt_SO1
                         
 
                     }));
-                    
                     if (TrainIsComing && r==915)
                     {
                         do
@@ -276,7 +274,6 @@ namespace Projekt_SO1
                             beforeTurnVelocity = Convert.ToInt32(car.Tag);
                         }
                     }));
-
                     if (stop)
                     {
                         do
@@ -286,7 +283,6 @@ namespace Projekt_SO1
                     }
                     r++;
                 }
-
                 //ostatnia prosta
                 for(int k=200; k < 1200; k++)
                 {
@@ -309,9 +305,7 @@ namespace Projekt_SO1
                     }));
                 }
             }).Start();
-
         }
-
         private void DriveUp(Image car, int velocity)
         {
             new Thread(() =>
@@ -364,7 +358,6 @@ namespace Projekt_SO1
                     beforeUpFirstTurn=false;
                     iv = 0;
                 }
-
                 //zakręt
                 int r = 821;
                 while (r < 822 && r > 655)
@@ -391,7 +384,6 @@ namespace Projekt_SO1
                     }));
                     r--;
                 }
-
                 //druga prosta
 
                 for (int j=230; j<660; j++)
@@ -412,7 +404,6 @@ namespace Projekt_SO1
                         }
                     }));
                 }
-
                 //zakręt
                 r = 1075;
                 while (r < 1200 && r > 813)
@@ -437,7 +428,6 @@ namespace Projekt_SO1
                             Canvas.SetLeft(car, Math.Sqrt(17200 - Math.Pow(r - 944, 2)) + 675);
                         }
                     }));
-
                     r--;
                 }
 
@@ -462,7 +452,6 @@ namespace Projekt_SO1
                 }
             }).Start();
         }
-
         public void Train(Image train)
         {
             new Thread(() =>
@@ -478,7 +467,6 @@ namespace Projekt_SO1
                 TrainIsComing = false;
             }).Start();
         }
-
         string CheckImage(Canvas canvas, double x, double y)
         {
             bool imageExists = false;
@@ -498,9 +486,7 @@ namespace Projekt_SO1
                     }
                 }
             }
-            
             return "false";
         }
-
     }
 }
