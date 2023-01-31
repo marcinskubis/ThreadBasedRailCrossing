@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Threading;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Windows.Media.Animation;
 
 namespace Projekt_SO1
 {
@@ -47,9 +36,7 @@ namespace Projekt_SO1
             btm2.EndInit();
             Random rnd = new Random();
             Stopwatch stopwatch = new Stopwatch();
-
-            
-
+            //tworzenie pociągów
             for(int i=0; i < 10; i++)
             {
                 train[i] = new Image();
@@ -60,7 +47,7 @@ namespace Projekt_SO1
                 Canvas.SetTop(train[i], 490);
                 Map.Children.Add(train[i]);
             }
-
+            //wyjazd pociągów w losowych momentach
             new Thread(() =>
             {
                 for (int i = 0; i < 10; i++)
@@ -69,7 +56,7 @@ namespace Projekt_SO1
                     Train(train[i]);
                 }
             }).Start();
-
+            //tworzenie aut
             for (int i = 0; i < 100; i++)
             {
                 cars[i] = new Image();
@@ -80,9 +67,8 @@ namespace Projekt_SO1
                 velocities[i] = Convert.ToInt32(cars[i].Tag);
                 Canvas.SetLeft(cars[i], -80);
                 Canvas.SetTop(cars[i], 240);
-                //Canvas.SetBottom(car[i], 50);
-                //Map.Children.Add(car[i]);
             }
+            //wyjazd aut w losowych momentach i w losowym kierunku
             new Thread(() =>
             {
                 for(int i = 0; i < 100; i++)
@@ -107,7 +93,7 @@ namespace Projekt_SO1
                 }
             }).Start();
         }
-
+        //jazda w dół
         private void DriveDown(Image car,int velocity,int vv)
         {
             new Thread(() =>
@@ -132,7 +118,7 @@ namespace Projekt_SO1
                         ;
                         ; }));
                 }
-                //zakręt
+                //pierwszy zakręt
                 int r = 659;
                 while (r > 658 && r < 822)
                 {
@@ -174,6 +160,7 @@ namespace Projekt_SO1
                     r++;
                 }
                 velocity = velocities[vv];
+                //druga prosta
                 for (int j=660; j > 200; j--)
                 {
                     Thread.Sleep(velocity);
@@ -195,7 +182,6 @@ namespace Projekt_SO1
                             Canvas.SetTop(car, 405);
                         }
                     }));
-
                     bool stop = false;
                     Dispatcher.Invoke(new Action(() => {
                         if(x!=0 && y != 0)
@@ -216,7 +202,6 @@ namespace Projekt_SO1
                             }
                         }
                     }));
-
                     if (stop)
                     {
                         do
@@ -232,6 +217,7 @@ namespace Projekt_SO1
                 x = 0;
                 y = 0;
                 r = 814;
+                //drugi zakręt
                 while(r>813 && r < 1075) //977
                 {
                     Thread.Sleep(velocity);
@@ -336,7 +322,6 @@ namespace Projekt_SO1
                             Canvas.SetTop(car, 620);
                         }
                     }));
-                    bool stop = false;
                     if (q != "false" && TrainIsComing)
                     {
                         do
@@ -358,7 +343,7 @@ namespace Projekt_SO1
                     beforeUpFirstTurn=false;
                     iv = 0;
                 }
-                //zakręt
+                //pierwszy zakręt
                 int r = 821;
                 while (r < 822 && r > 655)
                 {
@@ -385,7 +370,6 @@ namespace Projekt_SO1
                     r--;
                 }
                 //druga prosta
-
                 for (int j=230; j<660; j++)
                 {
                     Thread.Sleep(velocity);
@@ -404,7 +388,7 @@ namespace Projekt_SO1
                         }
                     }));
                 }
-                //zakręt
+                //drugi zakręt
                 r = 1075;
                 while (r < 1200 && r > 813)
                 {
@@ -430,7 +414,6 @@ namespace Projekt_SO1
                     }));
                     r--;
                 }
-
                 //ostatnia prosta
                 for(int p=660; p>-100; p--)
                 {
@@ -452,6 +435,7 @@ namespace Projekt_SO1
                 }
             }).Start();
         }
+        //funckja odpowiadająca za poruszanie się pociągu
         public void Train(Image train)
         {
             new Thread(() =>
@@ -467,6 +451,8 @@ namespace Projekt_SO1
                 TrainIsComing = false;
             }).Start();
         }
+        //funkcja CheckImage ma za zadanie sprawdzic czy z przodu pojazdu znajduje się inny pojazd, jeśli tak
+        //funkcja zwraca prędkość zauwazonego pojazdu, jeśli nie zwraca "false"
         string CheckImage(Canvas canvas, double x, double y)
         {
             bool imageExists = false;
